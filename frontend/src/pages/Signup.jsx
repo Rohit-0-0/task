@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../api/api";  // Axios instance
 import "./Signup.css";
 
@@ -8,6 +9,7 @@ function Signup() {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,12 +18,11 @@ function Signup() {
       alert("Signup successful!");
       console.log("Response:", res.data);
       setUser({ name: "", email: "", password: "" }); // clear form
+      navigate("/login");
     } catch (error) {
       console.error("Signup Error:", error.response?.data || error.message);
       alert("Signup failed! Please check console for details.");
     }
-    navigate("/login");
-
   };
 
   return (

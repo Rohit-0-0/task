@@ -6,6 +6,10 @@ export const signupUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "Name, email, and password are required" });
+    }
+
     // check existing user
     const existingUser = await User.findOne({ email });
     if (existingUser)
@@ -20,7 +24,10 @@ export const signupUser = async (req, res) => {
 
     res
       .status(201)
-      .json({ message: "User registered successfully", user: newUser });
+      .json({ 
+        message: "User registered successfully", 
+        user: { id: newUser._id, name: newUser.name, email: newUser.email } 
+      });
   } catch (error) {
     res.status(500).json({ message: "Signup failed", error });
   }
@@ -29,6 +36,10 @@ export const signupUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
 
     const user = await User.findOne({ email });
     if (!user)
