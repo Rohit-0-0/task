@@ -1,7 +1,5 @@
 import Task from "../models/Task.js";
 
-// @desc    Create a new task
-// @route   POST /api/tasks
 export const createTask = async (req, res) => {
   try {
     const { title, description } = req.body;
@@ -22,8 +20,7 @@ export const createTask = async (req, res) => {
   }
 };
 
-// @desc    Get user's tasks
-// @route   GET /api/tasks
+
 export const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.user.id });
@@ -33,8 +30,7 @@ export const getTasks = async (req, res) => {
   }
 };
 
-// @desc    Update a task
-// @route   PUT /api/tasks/:id
+
 export const updateTask = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
@@ -43,7 +39,6 @@ export const updateTask = async (req, res) => {
       return res.status(404).json({ message: "Task not found" });
     }
 
-    // Checking if the task belongs to the user
     if (task.user.toString() !== req.user.id) {
       return res.status(401).json({ message: "User not authorized" });
     }
@@ -59,8 +54,6 @@ export const updateTask = async (req, res) => {
   }
 };
 
-// @desc    Delete a task
-// @route   DELETE /api/tasks/:id
 export const deleteTask = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
@@ -69,7 +62,6 @@ export const deleteTask = async (req, res) => {
       return res.status(404).json({ message: "Task not found" });
     }
 
-    // Checking if the task belongs to the user
     if (task.user.toString() !== req.user.id) {
       return res.status(401).json({ message: "User not authorized" });
     }

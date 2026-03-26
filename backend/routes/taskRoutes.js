@@ -9,7 +9,7 @@ import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.use(protect); // All task routes require authentication
+router.use(protect);
 
 router.route("/").post(createTask).get(getTasks);
 router.route("/:id").put(updateTask).delete(deleteTask);
