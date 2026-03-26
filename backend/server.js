@@ -12,8 +12,8 @@ app.use(express.json());
 app.use(cors());
 
 mongoose
-  .connect(process.env.MONGO_URI, { dbName: "Login" })
-  .then(() => console.log("MongoDB Connected"))
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected to:", mongoose.connection.name))
   .catch((err) => console.log("MongoDB Error:", err));
 
 app.use("/api/auth", authRoutes);
